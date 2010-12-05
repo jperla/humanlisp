@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import re
+import sys
 
 def line_tokenize(s):
     """Accepts string.
@@ -170,23 +171,27 @@ def compile_file(filename):
     new_file = '\n\n'.join(format_s_expression(a) for a in asts)
     open(target_filename, 'w').write(new_file)
 
-try:
-    compile_file('example.hlisp')
 
-    code = open('example.hlisp', 'r').read()
-    lines = line_tokenize(code)
-    groups = group_hexpressions(lines)
-    print groups
-    indented_asts = [indented_ast(g) for g in groups]
-    print indented_asts
-    indented_ast = indented_asts[2]
-    ast = calculate_s_expression(indented_ast)
-    print ast
-    print format_s_expression(ast)
-except Exception, e:
-    print e
-    import pdb; pdb.post_mortem()
+if __name__=='__main__':
+    #TODO: jperla: line continuations with parens
+    #TODO: jperla: remove comments
 
-#TODO: jperla: line continuations with parens
-#TODO: jperla: remove comments
+    if len(sys.argv) > 1:
+        compile_file(sys.argv[1])
+    else:
+        # testing and development scaffolding 
+        try:
+            code = open('example.hlisp', 'r').read()
+            lines = line_tokenize(code)
+            groups = group_hexpressions(lines)
+            print groups
+            indented_asts = [indented_ast(g) for g in groups]
+            print indented_asts
+            indented_ast = indented_asts[2]
+            ast = calculate_s_expression(indented_ast)
+            print ast
+            print format_s_expression(ast)
+        except Exception, e:
+            print e
+            import pdb; pdb.post_mortem()
 

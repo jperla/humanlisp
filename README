@@ -1,0 +1,12 @@
+Human Lisp
+
+List for human beings.
+
+compiler.py accepts a filename (*.hlisp) and then writes a file (*.clj).  It compilse human lisp into clojure.
+
+It is written in a functional way in python.
+
+
+It has a couple of bugs, and needs to be extended in a couple of key ways.
+
+It has extensive doc strings.
