@@ -1,0 +1,39 @@
+
+
+    print-hello: println "Hello," name
+defn say-hello [name] print-hello
+
+
+
+            is-first-letter-vowel: (vowel? first-letter)
+            just-ay: str word "ay"
+            move-and-add-ay: str (subs word 1) first-letter "ay"
+        switch-vowel: if is-first-letter-vowel just-ay move-and-add-ay
+    with-first: let [first-letter (first word)] switch-vowel
+defn pig-lagtin [word] with-first
+
+
+            en-case: str "Goodbye, " name
+            es-case: str "Adios, " name
+                s: str "unsupported language " language
+            default: throw (IllegalArgumentException s)
+        switch: condp = language en-case es-case default
+    name-and-lang: [name language] switch
+    just-name:     [name] (parting name "en")
+    default:       [] (parting "World")
+defn parting default just-name name-and-lang
+
+
+          recurse: recur (dec n) (* factorial n)
+        if-zero: if (zero? n) factorial recurse
+    theloop: loop [n number factorial 1] if-zero
+    doc: "computes the factorial of a positive integer in a way that doesn't consume stack space"
+defn factorial-1 doc [number] theloop
+
+
+
+    reduction: reduce conj nil col1
+    doc: "Returns a seq of the items in coll in reverse order. Not lazy."
+defn reverse doc [col1] reduction
+
+

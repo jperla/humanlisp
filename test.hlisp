@@ -1,0 +1,146 @@
+; Clojure
+;(defn hello [name]
+;  (println "Hello," name))
+
+    print-hello: println "Hello," name
+defn hello [name] print-hello
+
+;notice that funs can be read top-down or bottom-up for different comprenehnsion
+
+defn hello [name] print-hello
+    print-hello: println "Hello," name
+
+; This is Clojure code.
+; When a set is used as a function, it returns a boolean
+; that indicates whether the argument is in the set.
+;(def vowel? (set "aeiou"))
+
+;(defn pig-latin [word] ; defines a function
+  ; word is expected to be a string
+  ; which can be treated like a sequence of characters.
+;  (let [first-letter (first word)] ; assigns a local binding
+;    (if (vowel? first-letter)
+;      (str word "ay") ; then part of if
+;      (str (subs word 1) first-letter "ay")))) ; else part of if
+;(println (pig-latin "red"))
+;(println (pig-latin "orange"))
+
+
+            is-first-letter-vowel: (vowel? first-letter)
+            just-ay: str word "ay"
+            move-and-add-ay: str (subs word 1) first-letter "ay"
+        switch-vowel: if is-first-letter-vowel just-ay move-and-add-ay
+    with-first: let [first-letter (first word)] switch-vowel
+defn pig-lagtin [word] with-first
+
+
+            ; maybe use this construct, if immediate parent doesn't have it, look farther up?
+            first-letter: (first word)
+        is-first-letter-vowel: (vowel? first-letter)
+        add-ay: str word ay
+        move-and-add-ay: str (subs word 1) first-letter "ay"
+    switch-vowel: if is-first-letter-vowel add-ay move-and-add-ay
+defn pig-lagtin [word] switch-vowel
+
+
+
+defn pig-lagtin [word] with-first
+    with-first: let [first-letter (first word)] switch-vowel
+        switch-vowel: if is-first-letter-vowel just-ay move-and-add-ay
+            is-first-letter-vowel: (vowel? first-letter)
+            just-ay: str word "ay"
+            move-and-add-ay: str (subs word 1) first-letter "ay"
+
+
+; notice that optimization can happen at the compile time, so that let statements are needed less
+;notice that funs can be read top-down or bottom-up for different comprenehnsion
+
+println (pig-latin "red")
+println (pig-latin "orange")
+
+
+:(defn parting
+:  "returns a String parting in a given language"
+:  ([] (parting "World"))
+:  ([name] (parting name "en"))
+:  ([name language]
+    ; condp is similar to a case statement in other languages.
+    ; It is described in more detail later.
+    ; It is used here to take different actions based on whether the
+    ; parameter "language" is set to "en", "es" or something else.
+:    (condp = language
+:      "en" (str "Goodbye, " name)
+:      "es" (str "Adios, " name)
+:      (throw (IllegalArgumentException.
+:        (str "unsupported language " language))))))
+
+            en-case: str "Goodbye, " name
+            es-case: str "Adios, " name
+                s: str "unsupported language " language
+            default: throw (IllegalArgumentException s)
+        switch: condp = language en-case es-case default
+    name-and-lang: [name language] switch
+    just-name:     [name] (parting name "en")
+    default:       [] (parting "World")
+defn parting default just-name name-and-lang
+
+defn parting default just-name name-and-lang
+    default:       [] (parting "World")
+    just-name:     [name] (parting name "en")
+    name-and-lang: [name language] switch
+        switch: condp = language english-case espanol-case default
+            english-case: "en" (str "Goodbye, " name)
+            espanol-case: "es" (str "Adios, " name)
+                s: str "unsupported language " language
+            default: throw (IllegalArgumentException s)
+
+; notice how the cases are nicely named, including default
+; notice that funs can be read top-down or bottom-up for different comprenehnsion
+; notice the many fewer parentheses
+
+
+;(defn factorial-1 [number]
+;  "computes the factorial of a positive integer
+;     in a way that doesn't consume stack space"
+;       (loop [n number factorial 1]
+;           (if (zero? n)
+;                 factorial
+;                       (recur (dec n) (* factorial n)))))
+;(println (time (factorial-1 5))) ; -> "Elapsed time: 0.071 msecs"\n120
+
+            recurse: recur (dec n) (* factorial n)
+        if-zero: if (zero? n) factorial recurse
+    theloop: loop [n number factorial 1] if-zero
+    doc: "computes the factorial of a positive integer in a way that doesn't consume stack space"
+defn factorial-1 [number] doc theloop
+
+
+
+defn factorial-1 [number] doc theloop
+    doc: "computes the factorial of a positive integer in a way that doesn't consume stack space"
+    theloop: loop [n number factorial 1] if-zero
+        if-zero: if (zero? n) factorial recurse
+            recurse: recur (dec n) (* factorial n)
+
+
+println (time (factorial-1 5)) ; -> "Elapsed time: 0.071 msecs"\n120
+
+; notice the many fewer parentheses
+
+;(defn reverse
+;  "Returns a seq of the items in coll in reverse order. Not lazy."
+;  [coll]
+;    (reduce conj nil coll))
+
+
+    reduction: reduce conj nil col1
+    doc: "Returns a seq of the items in coll in reverse order. Not lazy."
+defn reverse doc [col1] reduction
+
+defn reverse doc [col1] reduction
+    doc: "Returns a seq of the items in coll in reverse order. Not lazy."
+    reduction: reduce conj nil col1
+
+; notice that this method is shorter!
+
+
